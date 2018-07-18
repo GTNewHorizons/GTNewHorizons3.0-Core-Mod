@@ -42,10 +42,12 @@ public class AspectUtil {
 
 
 	public static ItemStack phial(Aspect a, int count, int aspectPerPhial){
-		ItemStack i = new ItemStack(ItemsTC.phial, count, 1);
+		if (a!= null){
+			ItemStack i = new ItemStack(ItemsTC.phial, count, 1);
+			((ItemPhial) ItemsTC.phial).setAspects(i, new AspectList().add(a, aspectPerPhial));
+		}
 		if(a == null)
 			i = new ItemStack(ItemsTC.phial, count, 0);
-		((ItemPhial) ItemsTC.phial).setAspects(i, new AspectList().add(a, aspectPerPhial));
 		return i;
 	}
 
