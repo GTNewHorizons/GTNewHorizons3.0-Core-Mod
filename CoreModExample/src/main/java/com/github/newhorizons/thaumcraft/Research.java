@@ -21,14 +21,14 @@ public class Research {
 	public static final String catNameBloodmagic = "BLOODMAGIC";
 	public static final String catNameGTNH = "GTNH";
 
-	public static ResourceLocation iconBotania = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_botania.png");
-	public static ResourceLocation backBotania = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_botania.jpg");
+	public static final ResourceLocation iconBotania = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_botania.png");
+	public static final ResourceLocation backBotania = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_botania.jpg");
 
-	public static ResourceLocation iconBloodmagic = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_bloodmagic.png");
-	public static ResourceLocation backBloodmagic = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_bloodmagic.jpg");
+	public static final ResourceLocation iconBloodmagic = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_bloodmagic.png");
+	public static final ResourceLocation backBloodmagic = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_bloodmagic.jpg");
 
-	public static ResourceLocation iconGTNH = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_gtnh.png");
-	public static ResourceLocation backGTNH = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_gtnh.jpg");
+	public static final ResourceLocation iconGTNH = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_gtnh.png");
+	public static final ResourceLocation backGTNH = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_gtnh.jpg");
 
 	public static void addResearch() {
 		createBotaniaResearch();
@@ -91,9 +91,10 @@ public class Research {
  }
 
  private static ItemStack getFlower(String s) {
+	 ItemStack ret = null;
 	 if(Loader.isModLoaded("botania"))
-	 return vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType(s);
-	 else return null;
+	 	ret = vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType(s);
+	 return ret;
  }
 
 }
