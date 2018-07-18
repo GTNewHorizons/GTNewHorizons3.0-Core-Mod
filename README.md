@@ -1,4 +1,4 @@
-# GT New Horizons Mod Pack 3.0
+# GT New Horizons 3.0 Core Mod
 
 GTNH 3.0 for Mc 1.12 or later
 
