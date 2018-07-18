@@ -42,9 +42,9 @@ public class AspectUtil {
 
 
 	public static ItemStack phial(Aspect a, int count, int aspectPerPhial){
-		if(a == null)
-			return new ItemStack(ItemsTC.phial, count, 0);
 		ItemStack i = new ItemStack(ItemsTC.phial, count, 1);
+		if(a == null)
+			i = new ItemStack(ItemsTC.phial, count, 0);
 		((ItemPhial) ItemsTC.phial).setAspects(i, new AspectList().add(a, aspectPerPhial));
 		return i;
 	}
@@ -57,14 +57,17 @@ public class AspectUtil {
 
 
 	public static Aspect getAspectFromCrystalBlockStack(ItemStack is){
-		if(is.hasTagCompound() && is.getTagCompound().hasKey("Aspect", NBT.TAG_STRING))
-		{
-			Aspect a = Aspect.getAspect(is.getTagCompound().getString("Aspect"));
-			if(a != null)
-				return a;
+		Aspect a = null;
+		
+		if(is.hasTagCompound() && is.getTagCompound().hasKey("Aspect", NBT.TAG_STRING)){
+			a = Aspect.getAspect(is.getTagCompound().getString("Aspect"));
 		}
-		ArrayList<Aspect> al = new ArrayList<Aspect>(Aspect.aspects.values());
-		return al.get((int) (System.currentTimeMillis() % (al.size() * 1000L) / 1000));
+		
+		if(a == null){
+			ArrayList<Aspect> al = new ArrayList<Aspect>(Aspect.aspects.values());
+			a = al.get((int) (System.currentTimeMillis() % (al.size() * 1000L) / 1000));
+		}
+		return a;
 	}
 
 	public static NBTTagCompound writeALToNBT(AspectList list, NBTTagCompound nbt)
