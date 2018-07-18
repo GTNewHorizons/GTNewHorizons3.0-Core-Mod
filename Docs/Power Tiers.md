@@ -25,4 +25,12 @@
 | Twilight F| -      |    -    |    x    |    x       |     x   |     x   |     ?   |
 | Moon      | -      |    -    |    -    |    -       |     x   |     x   |     
 | Mars      | -      |    -    |    -    |    -       |     -   |     x   |     x   | 
-   
+|Travel Options|
+|        |Horses/boats|   -    | Better boats/glider|coal jetpack|
+|Weapons |
+|Melee   |flint/iron sword|    |
+|Ranged  |Knives/javelins|     |
+|Armors  |
+|        |           |
+|Special Armors|
+|        |Hazmat?BBQ?|         | Apiarist |           | Space suit| heat prot| 
