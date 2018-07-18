@@ -1,5 +1,8 @@
 package com.github.newhorizons;
+import com.github.newhorizons.thaumcraft.Research;
 import com.github.newhorizons.util.libs.Refstrings;
+
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,7 +14,8 @@ import org.apache.logging.log4j.Logger;
 @Mod(
         modid = Refstrings.MODID,
         name = Refstrings.NAME,
-        version = Refstrings.VERSION
+        version = Refstrings.VERSION,
+        dependencies="after:thaumcraft"
 )
 public class Main {
 
@@ -27,6 +31,7 @@ public class Main {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+    	if(Loader.isModLoaded("thaumcraft"))Research.addResearch();
     }
 
 }
