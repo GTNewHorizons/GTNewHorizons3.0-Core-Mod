@@ -31,7 +31,8 @@ public class Main {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-    	if(Loader.isModLoaded("thaumcraft"))Research.addResearch();
+    	if(Loader.isModLoaded("thaumcraft"))
+                Research.addResearch();
     }
 
 }
