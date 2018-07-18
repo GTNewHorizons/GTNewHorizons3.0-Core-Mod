@@ -14,7 +14,6 @@ import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchCategory;
 import thaumcraft.api.research.ResearchStage;
 import thaumcraft.api.research.ResearchStage.Knowledge;
-import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 public class Research {
 
@@ -92,7 +91,9 @@ public class Research {
  }
 
  private static ItemStack getFlower(String s) {
-	 return ItemBlockSpecialFlower.ofType(s);
+	 if(Loader.isModLoaded("botania"))
+	 return vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType(s);
+	 else return null;
  }
 
 }
