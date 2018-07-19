@@ -4,9 +4,13 @@ import com.github.newhorizons.util.libs.Refstrings;
 import com.github.newhorizons.util.thaumcraft.AspectUtil;
 import com.github.newhorizons.util.thaumcraft.GTNHResearchHelper;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
@@ -14,12 +18,15 @@ import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchCategory;
 import thaumcraft.api.research.ResearchStage;
 import thaumcraft.api.research.ResearchStage.Knowledge;
+import thaumcraft.common.lib.research.theorycraft.CardBeacon;
 
 public class Research {
 
 	public static final String catNameBotania = "BOTANIA";
 	public static final String catNameBloodmagic = "BLOODMAGIC";
 	public static final String catNameGTNH = "GTNH";
+
+	public static final ResourceLocation backoverlay = new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_over.png");
 
 	public static final ResourceLocation iconBotania = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/icon/icon_botania.png");
 	public static final ResourceLocation backBotania = new ResourceLocation(Refstrings.MODID, "textures/thaumcraft/tab/tab_botania.jpg");
@@ -32,17 +39,22 @@ public class Research {
 
 	public static void addResearch() {
 		createBotaniaResearch();
-
+        createBloodyResearch();
+        createGTNHResearch();
 	}
 
     private static ResearchCategory catBotania;
+    private static ResearchCategory catBloodmagic;
+    private static ResearchCategory catGTNH;
 
  private static void createBotaniaResearch() {
+
 	catBotania = ResearchCategories.registerCategory(catNameBotania, null, null, iconBotania, backBotania);
+
 	ResearchStage[] stages = new ResearchStage[]{
 			new GTNHResearchHelper.RSB()
-			.setConsumedItems(new ItemStack(Items.BOOK), AspectUtil.crystalEssence(Aspect.MIND), AspectUtil.crystalEssence(Aspect.PLANT))
-			.setKnow(new Knowledge(EnumKnowledgeType.OBSERVATION, catBotania, 4))
+			.setConsumedItems(new ItemStack(Items.BOOK), AspectUtil.crystalEssence(Aspect.MIND), AspectUtil.crystalEssence(Aspect.MAGIC))
+			.setKnow(new Knowledge(EnumKnowledgeType.THEORY, catBotania, 4))
 			.setText("research_stage."+Refstrings.MODID+":test.0")
 			.build(),
 			new GTNHResearchHelper.RSB()
@@ -50,7 +62,7 @@ public class Research {
             .setRecipes("botania:lexicon").build()
 	};
 
-
+	// Botania Research, maybe usable for something
 	GTNHResearchHelper.makeBotaniaResearch("LEXICON", "Lexica Botania", 0, 0, getModItem("botania", "lexicon", 1, 0), stages, null);
 	GTNHResearchHelper.makeBotaniaResearch("EREBUS", "The Erebus", 0, 2, getModItem("erebus", "gaean_keystone", 1, 0), stages, new String[] {"LEXICON"});
 	GTNHResearchHelper.makeBotaniaResearch("EREBUSKEY", "Staff of Gaea", -1, 4, getModItem("erebus", "portal_activator", 1, 0), stages, new String[] {"EREBUS"});
@@ -83,17 +95,58 @@ public class Research {
 	GTNHResearchHelper.makeBotaniaResearch("NARSLIMMUS", "Narslimus",-7, 3, getFlower("narslimmus"), stages, new String[] {"THERMALILY","ARCANEROSE"});
 	GTNHResearchHelper.makeBotaniaResearch("GOURMARYLLIS", "Gourmaryllis",-8, 4, getFlower("gourmaryllis"), stages, new String[] {"THERMALILY","ARCANEROSE"});
 
+ }
+
+ private static void createBloodyResearch() {
+
+	catBloodmagic = ResearchCategories.registerCategory(catNameBloodmagic, null, null, iconBloodmagic, backBloodmagic);
+
+	ResearchStage[] stages = new ResearchStage[]{
+			new GTNHResearchHelper.RSB()
+			.setConsumedItems(new ItemStack(Items.BOOK), AspectUtil.crystalEssence(Aspect.MIND), AspectUtil.crystalEssence(Aspect.PLANT))
+			.setKnow(new Knowledge(EnumKnowledgeType.OBSERVATION, catBloodmagic, 4))
+			.setText("research_stage."+Refstrings.MODID+":test.0")
+			.build(),
+			new GTNHResearchHelper.RSB()
+			.setText("research_stage."+Refstrings.MODID+":test.1")
+            .setRecipes("botania:lexicon").build()
+	};
+
+	GTNHResearchHelper.makeBloodyResearch("BLOODALTAR", "Blood Altar", 0, 0, null, stages, null);
 
  }
 
- private static ItemStack getModItem(String modid,String name,int amount,int meta){
-	 return GameRegistry.makeItemStack(modid+":"+name, meta, amount, null);
+ private static void createGTNHResearch() {
+
+	catGTNH = ResearchCategories.registerCategory(catNameGTNH, null, null, iconGTNH, backGTNH, backoverlay);
+
+	ResearchStage[] stages = new ResearchStage[]{
+			new GTNHResearchHelper.RSB()
+			.setConsumedItems(new ItemStack(Items.BOOK), AspectUtil.crystalEssence(Aspect.MIND), AspectUtil.crystalEssence(Aspect.PLANT))
+			.setKnow(new Knowledge(EnumKnowledgeType.OBSERVATION, catGTNH, 4))
+			.setText("research_stage."+Refstrings.MODID+":test.0")
+			.build()
+	};
+
+    //Enchanting Table
+	GTNHResearchHelper.makeGTNHResearch("ENCHANTINGTABLE", "Enchantment Table", 0, 0, new ItemStack(Blocks.ENCHANTING_TABLE,1,0), stages, null);
+
+	// Test for Custom Aids
+	GTNHResearchHelper.createAid(Blocks.SEA_LANTERN, new Class[] {CardBeacon.class});
  }
 
- private static ItemStack getFlower(String s) {
-	 ItemStack ret = null;
-	 if(Loader.isModLoaded("botania"))
-	 	ret = vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType(s);
+ private static ItemStack getModItem(String modid, String name, int amount, int meta){
+	 return GameRegistry.makeItemStack(modid + ":" + name, meta, amount, null);
+ }
+
+ private static ItemStack getFlower(String type){
+	ItemStack ret = null;
+	 if(Loader.isModLoaded("botania")) {
+	  NBTTagCompound nbt = new NBTTagCompound();
+	  nbt.setString("type", type);
+	  ret = GameRegistry.makeItemStack("botania:specialflower", 1, 0, null);
+	  ret.setTagCompound(nbt);
+	 }
 	 return ret;
  }
 

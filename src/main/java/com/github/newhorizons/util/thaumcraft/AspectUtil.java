@@ -1,6 +1,5 @@
 package com.github.newhorizons.util.thaumcraft;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
@@ -42,13 +41,14 @@ public class AspectUtil {
 
 
 	public static ItemStack phial(Aspect a, int count, int aspectPerPhial){
-		if (a!= null){
-			ItemStack i = new ItemStack(ItemsTC.phial, count, 1);
-			((ItemPhial) ItemsTC.phial).setAspects(i, new AspectList().add(a, aspectPerPhial));
-		}
-		if(a == null)
+	    ItemStack i = null;
+		 if(a!= null){
+		  i = new ItemStack(ItemsTC.phial, count, 1);
+		  ((ItemPhial) ItemsTC.phial).setAspects(i, new AspectList().add(a, aspectPerPhial));
+		 }
+		 if(a == null)
 			i = new ItemStack(ItemsTC.phial, count, 0);
-		return i;
+		  return i;
 	}
 
 	public static ItemStack crystalEssence(Aspect a, int count){
@@ -60,11 +60,11 @@ public class AspectUtil {
 
 	public static Aspect getAspectFromCrystalBlockStack(ItemStack is){
 		Aspect a = null;
-		
+
 		if(is.hasTagCompound() && is.getTagCompound().hasKey("Aspect", NBT.TAG_STRING)){
 			a = Aspect.getAspect(is.getTagCompound().getString("Aspect"));
 		}
-		
+
 		if(a == null){
 			ArrayList<Aspect> al = new ArrayList<Aspect>(Aspect.aspects.values());
 			a = al.get((int) (System.currentTimeMillis() % (al.size() * 1000L) / 1000));
