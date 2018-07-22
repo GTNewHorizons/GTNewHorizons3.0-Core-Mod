@@ -131,7 +131,7 @@ public class Research {
     //Enchanting Table
 	GTNHResearchHelper.makeGTNHResearch("ENCHANTINGTABLE", "Enchantment Table", 0, 0, new ItemStack(Blocks.ENCHANTING_TABLE,1,0), stages, null);
 
-	// Test for Custom Aids
+	// Test for Custom Helps
 	GTNHResearchHelper.createAid(Blocks.SEA_LANTERN, new Class[] {CardBeacon.class});
  }
 
@@ -145,7 +145,8 @@ public class Research {
 	  NBTTagCompound nbt = new NBTTagCompound();
 	  nbt.setString("type", type);
 	  ret = GameRegistry.makeItemStack("botania:specialflower", 1, 0, null);
-	  ret.setTagCompound(nbt);
+	  if (ret != null)
+	  	ret.setTagCompound(nbt);
 	 }
 	 return ret;
  }
